@@ -6,8 +6,8 @@ on:
   pull_request:
 
 env:
-  VALKEY_HOSTNAME: valkey
-  REDIS_URL: valkey
+  VALKEY_HOSTNAME: database
+  REDIS_HOSTNAME: database
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         swift: ["swift:6.1", "swift:6.2"]
-        database: ["valkey/valkey:latest"]
+        database: ["valkey/valkey:latest", "redis:latest"]
     container:
       image: ${{ matrix.swift }}
     services:
