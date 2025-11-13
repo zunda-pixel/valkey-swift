@@ -17,15 +17,16 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        image: ["swift:6.1", "swift:6.2"]
+        swift: ["swift:6.1", "swift:6.2"]
+        cache: ["valkey/valkey:latest", "redis:latest"]
     container:
-      image: ${{ matrix.image }}
+      image: ${{ matrix.swift }}
     services:
       valkey:
-        image: valkey/valkey:latest
+        image: ${{ matrix.cache }}
         ports:
           - 6379:6379
-        options: --entrypoint valkey-server
+        options: --entrypoint ${{ contains(matrix.cache, 'redis') && 'redis-server' || 'valkey-server' }}
     steps:
       - name: Install jemalloc
         run: |
