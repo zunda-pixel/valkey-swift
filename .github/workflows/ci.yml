@@ -26,7 +26,6 @@ jobs:
         image: ${{ matrix.cache }}
         ports:
           - 6379:6379
-        options: --entrypoint ${{ contains(matrix.cache, 'redis') && 'redis-server' || 'valkey-server' }}
     steps:
       - name: Install jemalloc
         run: |
