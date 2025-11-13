@@ -12,6 +12,7 @@ concurrency:
 env:
   VALKEY_HOSTNAME: valkey
   REDIS_HOSTNAME: valkey
+  REDIS_URL: valkey
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
