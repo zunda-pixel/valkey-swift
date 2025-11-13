@@ -18,12 +18,12 @@ jobs:
     strategy:
       matrix:
         swift: ["swift:6.1", "swift:6.2"]
-        cache: ["valkey/valkey:latest", "redis:latest"]
+        database: ["valkey/valkey:latest", "redis:latest"]
     container:
       image: ${{ matrix.swift }}
     services:
-      valkey:
-        image: ${{ matrix.cache }}
+      database:
+        image: ${{ matrix.database }}
         ports:
           - 6379:6379
     steps:
