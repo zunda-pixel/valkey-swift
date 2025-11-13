@@ -26,8 +26,6 @@ jobs:
     services:
       database:
         image: ${{ matrix.database }}
-        ports:
-          - 6379:6379
     steps:
       - name: Install jemalloc
         run: |
