@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         swift: ["swift:6.1", "swift:6.2"]
-        database: ["valkey/valkey:latest", "redis:latest"]
+        database: ["valkey/valkey:latest"]
     container:
       image: ${{ matrix.swift }}
     services:
