@@ -157,7 +157,7 @@ struct CommandIntegratedTests {
     }
 
     @available(valkeySwift 1.0, *)
-    @Test(.disabled("failed in redis"))
+    @Test
     func testFUNCTIONLIST() async throws {
         var logger = Logger(label: "Valkey")
         logger.logLevel = .trace
@@ -175,8 +175,8 @@ struct CommandIntegratedTests {
                         return redis.call("SET", keys[1], args[1])
                     end
 
-                    server.register_function('valkey_swift_test_set', test_set)
-                    server.register_function('valkey_swift_test_get', test_get)
+                    redis.register_function('valkey_swift_test_set', test_set)
+                    redis.register_function('valkey_swift_test_get', test_get)
                     """
             )
             let list = try await client.functionList(libraryNamePattern: "_valkey_swift_tests", withcode: true)
@@ -193,7 +193,7 @@ struct CommandIntegratedTests {
     }
 
     @available(valkeySwift 1.0, *)
-    @Test(.disabled("failed in redis"))
+    @Test
     func testSCRIPTfunctions() async throws {
         var logger = Logger(label: "Valkey")
         logger.logLevel = .trace
@@ -201,9 +201,8 @@ struct CommandIntegratedTests {
             let sha1 = try await client.scriptLoad(
                 script: "return redis.call(\"GET\", KEYS[1])"
             )
-            let script = try await client.scriptShow(sha1: sha1)
-            #expect(script == "return redis.call(\"GET\", KEYS[1])")
-            _ = try await client.scriptExists(sha1s: [sha1])
+            let exists = try await client.scriptExists(sha1s: [sha1])
+            #expect(exists == [true])
         }
     }
 }
