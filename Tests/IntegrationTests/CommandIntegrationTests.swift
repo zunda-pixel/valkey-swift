@@ -202,9 +202,8 @@ struct CommandIntegratedTests {
             let sha1 = try await client.scriptLoad(
                 script: "return redis.call(\"GET\", KEYS[1])"
             )
-            let script = try await client.scriptShow(sha1: sha1)
-            #expect(script == "return redis.call(\"GET\", KEYS[1])")
-            _ = try await client.scriptExists(sha1s: [sha1])
+            let exists = try await client.scriptExists(sha1s: [sha1])
+            #expect(exists == [true])
         }
     }
 }
